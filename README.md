@@ -288,8 +288,8 @@ From the project folder on your own machine:
 ```
 
 That runs the tests, copies the source with `rsync`, installs production
-dependencies on the server, restarts the service, and checks `/api/health`. Add
-`-u ubuntu` for an Ubuntu instance.
+dependencies on the server, restarts the service, and checks `/api/health`. It
+logs in as `ubuntu`; add `-u ec2-user` for an Amazon Linux instance.
 
 Then open `http://<PUBLIC-IP>` in a browser.
 

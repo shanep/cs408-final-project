@@ -16,14 +16,14 @@
 # Options:
 #   -h HOST   public IP or DNS name of the instance   (required)
 #   -i KEY    path to your .pem private key           (optional if ssh-agent has it)
-#   -u USER   SSH login user (default: ec2-user; use 'ubuntu' for Ubuntu images)
+#   -u USER   SSH login user (default: ubuntu; use 'ec2-user' for Amazon Linux)
 #   -d DIR    remote directory (default: /opt/todo-app)
 
 set -euo pipefail
 
 REMOTE_HOST=""
 SSH_KEY=""
-REMOTE_USER="ec2-user"
+REMOTE_USER="ubuntu"
 REMOTE_DIR="/opt/todo-app"
 SERVICE="todo-app"
 

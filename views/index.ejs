@@ -1,63 +1,35 @@
 <%#
-  The tracker: everything due soon, across every course.
+  The todo page.
 
-  Expects: title, current, assignments, courses, days, courseId, dayOptions,
-           summary, counts
+  Expects: title, current, todos, summary  (see server/routes/pages.js)
 
-  The list is already in the HTML when this reaches the browser. That is what
-  server-side rendering buys you: no spinner, no empty first paint, and the page
-  still shows your assignments with JavaScript turned off.
+  The list below is already filled in by the time the HTML reaches the browser.
+  That is the difference server-side rendering makes: the first paint needs no
+  JavaScript and no extra request.
 %>
 <%- include('partials/head', { title: title }) %>
 <%- include('partials/header', { current: current }) %>
 
-<main class="page">
-  <h1>What's due</h1>
+<main class="app">
+  <h1>My Todos</h1>
 
-  <%#
-    The filters are a plain GET form. Submitting it reloads the page with
-    ?days=...&course=..., which the route reads back. That means the filters
-    work without JavaScript, and every filtered view has a URL you can bookmark
-    or send to someone. public/js/ui.js then makes it feel faster.
-  %>
-  <form id="filters" class="filters" method="get" action="/">
-    <label>
-      Next
-      <select name="days">
-        <% dayOptions.forEach(function (option) { %>
-          <option value="<%= option %>" <%= option === days ? 'selected' : '' %>>
-            <%= option %> days
-          </option>
-        <% }); %>
-      </select>
-    </label>
-
-    <label>
-      Course
-      <select name="course">
-        <option value="">All courses</option>
-        <% courses.forEach(function (course) { %>
-          <option value="<%= course.id %>" <%= courseId === String(course.id) ? 'selected' : '' %>>
-            <%= course.code %>
-          </option>
-        <% }); %>
-      </select>
-    </label>
-
-    <%# Hidden unless JavaScript is off, in which case it is the only way to
-        apply the filters. ui.js removes the need to click it. %>
-    <button type="submit" class="filter-button">Apply</button>
+  <form id="new-todo-form" class="new-todo">
+    <label class="visually-hidden" for="new-todo-input">What needs doing?</label>
+    <input id="new-todo-input" name="title" type="text" placeholder="What needs doing?" maxlength="200"
+      autocomplete="off" required>
+    <button type="submit">Add</button>
   </form>
 
-  <div id="assignment-container">
-    <%- include('partials/assignment-list', {
-          assignments: assignments,
-          summary: summary,
-          counts: counts
-        }) %>
+  <%# js/ui.js replaces everything inside this div after each change. %>
+  <div id="todo-container">
+    <%- include('partials/todo-list', { todos: todos, summary: summary }) %>
   </div>
+
+  <p id="error" class="status error" role="alert" hidden></p>
 </main>
 
+<%# The browser JavaScript that makes the page interactive. It goes last, just
+    before the footer closes </body>, so the HTML is on screen first. %>
 <script type="module" src="/js/ui.js"></script>
 
 <%- include('partials/footer') %>
