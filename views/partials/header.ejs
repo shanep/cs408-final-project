@@ -1,0 +1,19 @@
+<%#
+  The site header and navigation, shared by every page.
+
+  Change the links here once and every page that includes this file picks up
+  the change. That is the whole point of a partial.
+
+  `current` tells us which page we are on so we can mark that link. The ternary
+  below is ordinary JavaScript -- inside an EJS tag, that is all you are writing.
+%>
+<header class="site-header">
+  <nav class="nav">
+    <%# Print the attribute's VALUE, not the whole attribute. The escaping tag
+        would turn the quotes in `aria-current="page"` into &quot; entities and
+        the attribute would break. Keep EJS tags inside the quotes, not around
+        them. aria-current="false" is the correct way to say "not this one". %>
+    <a href="/" aria-current="<%= current === 'home' ? 'page' : 'false' %>">Todos</a>
+    <a href="/about" aria-current="<%= current === 'about' ? 'page' : 'false' %>">About</a>
+  </nav>
+</header>

@@ -1,0 +1,35 @@
+<%#
+  The todo page.
+
+  Expects: title, current, todos, summary  (see server/routes/pages.js)
+
+  The list below is already filled in by the time the HTML reaches the browser.
+  That is the difference server-side rendering makes: the first paint needs no
+  JavaScript and no extra request.
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="app">
+  <h1>My Todos</h1>
+
+  <form id="new-todo-form" class="new-todo">
+    <label class="visually-hidden" for="new-todo-input">What needs doing?</label>
+    <input id="new-todo-input" name="title" type="text" placeholder="What needs doing?" maxlength="200"
+      autocomplete="off" required>
+    <button type="submit">Add</button>
+  </form>
+
+  <%# js/ui.js replaces everything inside this div after each change. %>
+  <div id="todo-container">
+    <%- include('partials/todo-list', { todos: todos, summary: summary }) %>
+  </div>
+
+  <p id="error" class="status error" role="alert" hidden></p>
+</main>
+
+<%# The browser JavaScript that makes the page interactive. It goes last, just
+    before the footer closes </body>, so the HTML is on screen first. %>
+<script type="module" src="/js/ui.js"></script>
+
+<%- include('partials/footer') %>

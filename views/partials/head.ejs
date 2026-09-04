@@ -1,0 +1,20 @@
+<%#
+  The top of every page: the head element and the opening body tag.
+
+  The README has a short cheat sheet for the four EJS tags. The one rule worth
+  memorizing now: print user data with the escaping tag, never the raw one.
+  Escaping is what stops a todo named like a script tag from running.
+%>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <%# `title` is passed in by whichever route rendered this page. %>
+  <title><%= title %></title>
+  <meta name="description" content="A simple full stack todo application">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>

@@ -1,0 +1,18 @@
+<%#
+  Shown for any URL the app does not recognize.
+
+  Rendering your own 404 instead of letting Express print its default is a
+  small thing that makes an app feel finished.
+
+  Expects: title, current, url
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="app">
+  <h1>Page not found</h1>
+  <p>There is nothing at <code><%= url %></code>.</p>
+  <p><a href="/">Back to your todos</a></p>
+</main>
+
+<%- include('partials/footer') %>

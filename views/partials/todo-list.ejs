@@ -1,0 +1,19 @@
+<%#
+  The whole list plus the summary line underneath it.
+
+  Expects: todos   -- an array of todos, already sorted
+           summary -- the sentence to show under the list
+
+  Two routes render this file: GET / puts it inside the full page, and
+  GET /partials/todos returns it on its own so the browser can swap in a fresh
+  copy after adding or changing a todo.
+%>
+<ul id="todo-list" class="todo-list">
+  <% todos.forEach(function(todo) { %>
+    <%# include() pulls in another template. The second argument is the data
+        that template can see -- it does NOT inherit our variables. %>
+    <%- include('todo-item', { todo: todo }) %>
+  <% }); %>
+</ul>
+
+<p class="status" role="status"><%= summary %></p>

@@ -1,0 +1,36 @@
+<%#
+  A second page, here to show that partials are worth the trouble: this page
+  gets the same <head>, header, and footer as the todo page without repeating
+  a single line of that markup.
+
+  Expects: title, current, todoCount
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="app">
+  <h1>About this app</h1>
+
+  <p>
+    A small full stack todo application: an Express REST API on the server, a
+    plain JavaScript front end in the browser, and EJS templates rendering the
+    HTML in between.
+  </p>
+
+  <p>
+    There <%= todoCount === 1 ? 'is' : 'are' %> currently
+    <strong><%= todoCount %></strong>
+    <%= todoCount === 1 ? 'todo' : 'todos' %> stored on the server.
+  </p>
+
+  <h2>The API</h2>
+  <ul>
+    <li><code>GET /api/todos</code> &mdash; list every todo</li>
+    <li><code>POST /api/todos</code> &mdash; create one</li>
+    <li><code>GET /api/todos/:id</code> &mdash; fetch one</li>
+    <li><code>PUT /api/todos/:id</code> &mdash; rename it or check it off</li>
+    <li><code>DELETE /api/todos/:id</code> &mdash; delete it</li>
+  </ul>
+</main>
+
+<%- include('partials/footer') %>

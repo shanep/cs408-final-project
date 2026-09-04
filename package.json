@@ -1,13 +1,25 @@
 {
-  "name": "web-dev",
-  "version": "0.0.1",
-  "description": "Learning to Code",
+  "name": "simple-full-stack",
+  "version": "1.0.0",
+  "description": "A simple full stack todo app: Express REST API + vanilla JavaScript front end",
   "private": true,
   "license": "MIT",
   "author": "Pat von Student",
+  "type": "module",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "lint:html": "htmlhint"
-    },
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
+    "test": "node --test test/*.test.js",
+    "lint:html": "htmlhint test/*.html"
+  },
+  "dependencies": {
+    "ejs": "^6.0.1",
+    "express": "^5.1.0"
+  },
   "devDependencies": {
     "qunit": "^2.21.1"
   }

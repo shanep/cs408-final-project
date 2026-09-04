@@ -1,0 +1,46 @@
+# A systemd unit file. systemd is the program that starts services on boot and
+# restarts them when they crash, so your app keeps running after you close your
+# SSH session.
+#
+# setup-ec2.sh copies this to /etc/systemd/system/todo-app.service.
+# Useful commands once it is installed:
+#   sudo systemctl status todo-app     # is it running?
+#   sudo systemctl restart todo-app    # restart after a deploy
+#   journalctl -u todo-app -f          # follow the logs
+[Unit]
+Description=Simple Full Stack Todo App
+After=network.target
+
+[Service]
+Type=simple
+
+# Run as an unprivileged user that only exists to run this app. If someone finds
+# a hole in the app, they get this account and nothing more.
+User=todo
+Group=todo
+
+WorkingDirectory=/opt/todo-app
+ExecStart=/usr/bin/node server/server.js
+
+# The app reads both of these (see server/server.js and server/store.js).
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=DATA_FILE=/opt/todo-app/data/todos.json
+
+# If the app crashes, start it again after 5 seconds.
+Restart=always
+RestartSec=5
+
+# Send console.log output to the system journal.
+StandardOutput=journal
+StandardError=journal
+
+# Some cheap hardening. The app can only write to its own data directory.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/todo-app/data
+
+[Install]
+WantedBy=multi-user.target

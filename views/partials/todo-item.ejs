@@ -1,0 +1,18 @@
+<%#
+  One row of the todo list.
+
+  Expects: todo -- a single todo object { id, title, done, createdAt }
+
+  This is the ONLY place the markup for a todo row is written. The browser never
+  builds a row itself; when something changes it asks the server for a freshly
+  rendered list. One template, one place to change it.
+%>
+<li class="todo <%= todo.done ? 'done' : '' %>" data-id="<%= todo.id %>">
+  <input type="checkbox" data-action="toggle" <%= todo.done ? 'checked' : '' %>
+    aria-label="Mark &quot;<%= todo.title %>&quot; as done">
+  <%# The escaping tag prints the title as text, so a todo named "<b>hi</b>"
+      shows those characters instead of turning bold. %>
+  <span class="todo-title"><%= todo.title %></span>
+  <button type="button" class="delete-button" data-action="delete"
+    aria-label="Delete &quot;<%= todo.title %>&quot;">Delete</button>
+</li>

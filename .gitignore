@@ -105,3 +105,7 @@ dist
 
 # MacOS stupid stuff
 .DS_Store
+
+# The JSON "database" is created at runtime and belongs to each machine
+data/
+
