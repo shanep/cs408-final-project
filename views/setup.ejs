@@ -1,0 +1,41 @@
+<%#
+  Shown when there is no usable Canvas token.
+
+  Expects: title, current, message
+
+  A first run with no .env is the most likely way this app fails, so it gets a
+  real page with the fix on it rather than an error.
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="page">
+  <h1>One more step</h1>
+
+  <p class="alert"><%= message %></p>
+
+  <h2>Get a Canvas access token</h2>
+  <ol class="steps">
+    <li>Open Canvas and click your profile picture, then <strong>Settings</strong>.</li>
+    <li>Scroll down to <strong>Approved Integrations</strong>.</li>
+    <li>Click <strong>+ New Access Token</strong>.</li>
+    <li>Give it a purpose (for example "Assignment Tracker") and an expiry date.</li>
+    <li>Click <strong>Generate Token</strong>, then copy it. Canvas shows it exactly once.</li>
+  </ol>
+
+  <h2>Put it in your .env file</h2>
+  <p>In the project folder:</p>
+  <pre><code>cp .env.example .env</code></pre>
+  <p>Then open <code>.env</code> and paste your token:</p>
+  <pre><code>CANVAS_API_TOKEN=1234~yourtokenhere</code></pre>
+  <p>Restart the app with <code>./start.sh</code> and reload this page.</p>
+
+  <p class="note">
+    <strong>Keep it secret.</strong> That token can do anything you can do in
+    Canvas. <code>.env</code> is listed in <code>.gitignore</code> so it will
+    not be committed. If a token ever does reach GitHub, delete it in Canvas
+    immediately and generate a new one.
+  </p>
+</main>
+
+<%- include('partials/footer') %>

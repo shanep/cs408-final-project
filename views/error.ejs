@@ -1,0 +1,23 @@
+<%#
+  Shown when something goes wrong that the user might be able to fix.
+
+  Expects: title, current, message, hint
+
+  Two separate lines on purpose: what happened, and what to do about it.
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="page">
+  <h1><%= title %></h1>
+
+  <p class="alert"><%= message %></p>
+
+  <% if (hint) { %>
+    <p class="note"><%= hint %></p>
+  <% } %>
+
+  <p><a href="/">Back to your assignments</a></p>
+</main>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,85 @@
+<%#
+  Submit a URL to an assignment.
+
+  Expects: title, current, courses, assignments, courseId, submittedUrl,
+           result, error
+
+  This is the only page that changes anything in Canvas. It is also the answer
+  to the bonus points: paste this repository's GitHub URL, pick the right
+  assignment, and the app turns in its own homework.
+%>
+<%- include('partials/head', { title: title }) %>
+<%- include('partials/header', { current: current }) %>
+
+<main class="page">
+  <h1>Submit a URL</h1>
+
+  <% if (result) { %>
+    <div class="banner success">
+      <p><strong>Submitted.</strong> Canvas accepted this URL:</p>
+      <p><a href="<%= result.url %>" target="_blank" rel="noopener"><%= result.url %></a></p>
+      <p class="timestamp">Recorded at <%= helpers.formatDue(result.submittedAt) %></p>
+    </div>
+  <% } %>
+
+  <% if (error) { %>
+    <p class="alert"><%= error %></p>
+  <% } %>
+
+  <%#
+    Step one is its own little GET form: choosing a course reloads the page with
+    ?course=..., and the route uses that to fill the assignment dropdown below.
+    Two small steps beat one form that needs JavaScript to be usable.
+  %>
+  <form class="filters" method="get" action="/submit">
+    <label>
+      Course
+      <select name="course">
+        <option value="">Choose a course...</option>
+        <% courses.forEach(function (course) { %>
+          <option value="<%= course.id %>" <%= courseId === String(course.id) ? 'selected' : '' %>>
+            <%= course.code %>
+          </option>
+        <% }); %>
+      </select>
+    </label>
+    <button type="submit" class="filter-button">Load assignments</button>
+  </form>
+
+  <% if (courseId && assignments.length === 0) { %>
+    <p class="empty">That course has no assignments you can submit to.</p>
+  <% } %>
+
+  <% if (assignments.length > 0) { %>
+    <%# Step two actually submits. POST, not GET, because it changes something. %>
+    <form class="submit-form" method="post" action="/submit">
+      <input type="hidden" name="course" value="<%= courseId %>">
+
+      <label class="field">
+        Assignment
+        <select name="assignment" required>
+          <% assignments.forEach(function (assignment) { %>
+            <option value="<%= assignment.id %>">
+              <%= assignment.title %><%= assignment.submitted ? ' (already submitted)' : '' %>
+            </option>
+          <% }); %>
+        </select>
+      </label>
+
+      <label class="field">
+        URL to hand in
+        <input type="url" name="url" value="<%= submittedUrl %>" required
+          placeholder="https://github.com/your-username/your-repo">
+      </label>
+
+      <button type="submit">Submit to Canvas</button>
+    </form>
+
+    <p class="note">
+      This sends a real submission to Canvas as an <code>online_url</code>
+      submission. Only assignments that accept a website URL will take it.
+    </p>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
