@@ -68,9 +68,19 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# Environment variables (NEVER commit these: they hold passwords, API keys, tokens)
 .env
+.env.*
+.env.local
+.env.development
+.env.development.local
 .env.test
+.env.test.local
+.env.production
+.env.production.local
+!.env.example
+!.env.sample
+!.env.template
 
 # parcel-bundler cache (https://parceljs.org/)
 .parcel-cache
@@ -109,3 +119,33 @@ dist
 # The JSON "database" is created at runtime and belongs to each machine
 data/
 
+# SSH keys and TLS certificates (the AWS .pem key pair, self-signed certs, etc.)
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+*.jks
+*.keystore
+*.asc
+*.gpg
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.ppk
+keys/
+secrets/
+.ssh/
+
+# Cloud provider and service credentials
+.aws/
+credentials
+aws-credentials.json
+gcp-key.json
+service-account*.json
+*.credentials.json
+.netrc
+.npmrc
